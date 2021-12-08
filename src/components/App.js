@@ -29,8 +29,7 @@ class App extends Component {
     // we saved the json file in another repository on github cause the original api was broken somehow
     axios
       .get(
-        `https://raw.githubusercontent.com/sinamoraddar/REST-Countries-API-with-color-theme-switcher--API/master/all.json`
-      )
+'https://restcountries.com/v2/all'      )
       .then(res => {
         this.setState(() => ({
           totalCountries: res.data
