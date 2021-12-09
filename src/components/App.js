@@ -1,79 +1,76 @@
-import React, { useCallback, useEffect, useState } from "react";
-import axios from "axios";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import "./App.scss";
+// components
 import Dashboard from "./Dashboard/Dashboard";
 import CountryDetails from "./CountryDetails/CountryDetails";
 import NotFound from "./NotFoundPage/NotFound";
+// context
 import { AppContext } from "../contexts/AppContext";
-
-//determine the homepage path based on the development mode
-const homePage =
-  process.env.NODE_ENV === "development"
-    ? "/"
-    : "/REST-Countries-API-with-color-theme-switcher/";
+// api
+import { baseUrl } from "../_api/config";
+// styles
+import "./App.scss";
+import { getCountryList } from "../_api/methods";
 
 const App = () => {
+  // refs
+  const _isMounted = useRef(true);
+
+  // state
   const [loading, setLoading] = useState(true);
   const [isUsingDarkMode, setIsUsingDarkMode] = useState(true);
   const [totalCountries, setTotalCountries] = useState([]);
-  // //change the darkmode state based on user interaction
-  const appModeChanger = useCallback(() => {
+
+  // callbacks
+  const toggleDarkMode = useCallback(() => {
     setIsUsingDarkMode((isUsingDarkMode) => !isUsingDarkMode);
   }, []);
 
+  // life cycle hooks
   useEffect(() => {
-    // fetch the countrylist's data from the api
-    // we saved the json file in another repository on github cause the original api was broken somehow
-    axios
-      .get("https://restcountries.com/v2/all")
-      .then((res) => {
-        setTotalCountries(res.data);
+    getCountryList()
+      .then((result) => {
+        if (_isMounted.current) {
+          setTotalCountries(result.data);
+        }
       })
-      .catch((error) => {
-        console.log(error);
-      });
+      .catch(console.error);
+
+    return () => {
+      _isMounted.current = false;
+    };
+  }, []);
+
+  const setLoadingValue = useCallback((loading) => {
+    if (typeof loading === "boolean") {
+      setLoading(loading);
+    } else throw new Error("loading value should be a boolean");
   }, []);
 
   return (
-    <AppContext.Provider value={{ loading, setLoading }}>
+    <AppContext.Provider
+      value={{
+        loading,
+        setLoadingValue,
+        toggleDarkMode,
+
+        isUsingDarkMode,
+
+        totalCountries,
+      }}
+    >
       <BrowserRouter>
         <Switch>
-          <Route
-            exact
-            path={homePage}
-            render={(routeProps) => (
-              <Dashboard
-                {...routeProps}
-                appModeChanger={appModeChanger}
-                darkMode={isUsingDarkMode}
-                homePage={homePage}
-                totalCountries={totalCountries}
-              />
-            )}
-          />
-          <Route
-            exact
-            path={`${homePage}countries/:countryName`}
-            render={(routeProps) => (
-              <CountryDetails
-                {...routeProps}
-                darkMode={isUsingDarkMode}
-                homePage={homePage}
-                appModeChanger={appModeChanger}
-                totalCountries={totalCountries}
-              />
-            )}
-          />
-          <Route
-            render={(routeProps) => (
-              <NotFound
-                {...routeProps}
-                darkMode={isUsingDarkMode}
-                homePage={homePage}
-              />
-            )}
-          />
+          <Route exact path={baseUrl}>
+            <Dashboard />
+          </Route>
+          <Route exact path={`${baseUrl}countries/:countryName`}>
+            <CountryDetails />
+          </Route>
+          <Route>
+            {" "}
+            <NotFound />
+          </Route>
         </Switch>
       </BrowserRouter>
     </AppContext.Provider>
