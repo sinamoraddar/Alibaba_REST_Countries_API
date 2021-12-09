@@ -1,99 +1,84 @@
-import React, { Component } from "react";
-import styles from "./Dashboard.module.scss";
+import React, { useContext, useEffect, useRef, useState } from "react";
+// components
 import NavBar from "../NavBar/NavBar";
 import FilterBar from "./FilterBar/FilterBar";
 import CountryList from "./CountryList/CountryList";
-class Dashboard extends Component {
-  constructor(props) {
-    super(props);
-    /* create a ref for scrolling functionality */
-    this.scrollTo = React.createRef(null);
-    this.state = {
-      filteredCountries: null,
-      countrySearchField: "",
-      regionFilter: "",
-    };
-  }
+// context
+import { AppContext } from "../../contexts/AppContext";
+// styles
+import styles from "./Dashboard.module.scss";
 
-  //update the state whenever the searchfield changes
-  onCountrySearchFieldChange = (country) => {
-    this.setState(
-      () => ({ countrySearchField: country }),
-      this.updateFilteredCountries
-    );
+const Dashboard = () => {
+  // context
+  const { isUsingDarkMode, totalCountries } = useContext(AppContext);
+
+  // ref
+  const scrollTo = useRef(null);
+
+  // state
+  const [filteredCountries, setFilteredCountries] = useState([]);
+  const [countrySearchField, setCountrySearchField] = useState("");
+  const [regionFilter, setRegionFilter] = useState("");
+
+  // callbacks
+  const onCountrySearchFieldChange = (countrySearchField) => {
+    setCountrySearchField(countrySearchField);
   };
 
-  //update region filter based on the dropdown menu's current item
-  onRegionChange = (region) => {
-    this.setState(
-      () => ({ regionFilter: region }),
-      this.updateFilteredCountries
-    );
+  const onRegionChange = (regionFilter) => {
+    setRegionFilter(regionFilter);
   };
 
-  //update the filtered countries list based on the current state
-  updateFilteredCountries = () => {
-    this.setState((prevState, prevProps) => {
-      const { totalCountries } = prevProps;
-      const { countrySearchField, regionFilter } = prevState;
-      //filter based on searchfield
+  const updateFilteredCountries = () => {
+    setFilteredCountries(() => {
       let filteredCountries = totalCountries.filter((country) => {
         return country.name
           .toLowerCase()
           .includes(countrySearchField.toLowerCase());
       });
-      //filter based on region
+
       if (regionFilter) {
         filteredCountries = filteredCountries.filter((country) => {
           return country.region.toLowerCase() === regionFilter.toLowerCase();
         });
       }
-      return { filteredCountries };
+
+      return filteredCountries;
     });
   };
 
-  componentDidMount() {
+  // life cycle hooks
+  useEffect(() => {
     //update the document's title right after the component is mounted
     document.title = "Where in the World ?";
-  }
+  }, []);
 
-  render() {
-    const { countrySearchField, filteredCountries, regionFilter } = this.state;
-    const { totalCountries, homePage } = this.props;
-    return (
-      <React.Fragment>
-        <header className={styles.dashboard}>
-          <NavBar
-            darkMode={this.props.darkMode}
-            appModeChanger={this.props.appModeChanger}
-            homePage={homePage}
-          />
-          <FilterBar
-            countrySearchField={countrySearchField}
-            darkMode={this.props.darkMode}
-            regionFilter={regionFilter}
-            onCountrySearchFieldChange={this.onCountrySearchFieldChange}
-            onRegionChange={this.onRegionChange}
-            scrollTo={this.scrollTo}
-          />
-        </header>
-        <main
-          className={`${styles.container} ${styles.dashboard} ${
-            styles.fillTheRemainingHeight
-          } ${this.props.darkMode ? `dark` : `light`}`}
-        >
-          <CountryList
-            filteredCountries={
-              filteredCountries ? filteredCountries : totalCountries
-            }
-            homePage={homePage}
-            totalCountries={totalCountries}
-            darkMode={this.props.darkMode}
-            scrollTo={this.scrollTo}
-          />
-        </main>
-      </React.Fragment>
-    );
-  }
-}
+  useEffect(() => {
+    updateFilteredCountries();
+  }, [regionFilter, countrySearchField, totalCountries]);
+
+  return (
+    <>
+      <header className={styles.dashboard}>
+        <NavBar />
+        <FilterBar
+          {...{
+            scrollTo,
+            onRegionChange,
+            onCountrySearchFieldChange,
+            regionFilter,
+            countrySearchField,
+          }}
+        />
+      </header>
+      <main
+        className={`${styles.container} ${styles.dashboard} ${
+          styles.fillTheRemainingHeight
+        } ${isUsingDarkMode ? `dark` : `light`}`}
+      >
+        <CountryList {...{ scrollTo, filteredCountries }} />
+      </main>
+    </>
+  );
+};
 export default Dashboard;
