@@ -3,6 +3,7 @@ import { AppContext } from "../../contexts/AppContext";
 
 const Loading = () => {
   const { isUsingDarkMode } = useContext(AppContext);
+
   return (
     <img
       className="loadingGif"

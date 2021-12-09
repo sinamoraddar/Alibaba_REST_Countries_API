@@ -10,6 +10,7 @@ import { AppContext } from "../../../contexts/AppContext";
 // api
 import { baseUrl } from "../../../_api/config";
 
+// supplementary components
 const countryItemCreator = (
   filteredCountries,
   currentPage,
@@ -28,6 +29,7 @@ const countryItemCreator = (
       />
     ));
 
+// main component
 const CountryList = ({
   filteredCountries,
   scrollTo,
@@ -53,6 +55,7 @@ const CountryList = ({
   useEffect(() => {
     setCurrentPage(0);
   }, [filteredCountries]);
+
   return (
     <section className={styles.countryList}>
       {loading ? (

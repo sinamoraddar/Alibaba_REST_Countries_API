@@ -7,7 +7,6 @@
   justify-content: center;
   position: relative;
   height: 180px;
-  //search bar's stylings
   > span {
     @include boxShadowGenerator($normalShadow);
     margin-bottom: 35px;
@@ -46,7 +45,6 @@
     }
   }
 
-  //region filter's stylings
   .regionFilter {
     display: flex;
     flex-direction: column;
@@ -105,7 +103,6 @@
     }
   }
 }
-//filter by region's arrow icon's stylings
 .arrow__Up {
   transform: rotate(-90deg);
 }

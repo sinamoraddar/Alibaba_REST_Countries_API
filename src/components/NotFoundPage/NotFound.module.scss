@@ -12,7 +12,6 @@
     font-weight: $semiBoldFontWeight;
     padding: 0.5rem 1rem;
     margin-top: 15px;
-    //we set the color to inherit ,to tell it to ignore the default link behavior
     color: inherit;
     @media screen and(hover:hover) {
       &:hover {

@@ -8,31 +8,6 @@ import React, {
 import styles from "./FilterBar.module.scss";
 import { AppContext } from "../../../contexts/AppContext";
 
-/*
-  our custom Hook that alerts clicks outside of the passed ref
- */
-const useOutsideAlerter = (regionFilterRef, setDropDownFilterStatus) => {
-  /**
-   * Alert if clicked on outside of element
-   */
-  const handleClickOutside = (event) => {
-    if (
-      regionFilterRef.current &&
-      !regionFilterRef.current.contains(event.target)
-    ) {
-      setDropDownFilterStatus(false);
-    }
-  };
-  useEffect(() => {
-    // Bind the event listener
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      // Unbind the event listener on clean up
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  });
-};
-
 const FilterBar = ({
   countrySearchField,
   regionFilter,
@@ -49,10 +24,16 @@ const FilterBar = ({
   // ref
   const regionFilterRef = useRef(null);
 
-  // custom hooks
-  useOutsideAlerter(regionFilterRef, setDropDownFilterStatus);
-
   // callbacks
+  const handleClickOutside = (event) => {
+    if (
+      regionFilterRef.current &&
+      !regionFilterRef.current.contains(event.target)
+    ) {
+      setDropDownFilterStatus(false);
+    }
+  };
+
   const onSearchFieldChange = useCallback(
     (e) => onCountrySearchFieldChange(e.target.value),
     []
@@ -77,6 +58,16 @@ const FilterBar = ({
 
     []
   );
+
+  // life cycle hooks
+  useEffect(() => {
+    // Bind the event listener
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      // Unbind the event listener on clean up
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  });
 
   return (
     <div

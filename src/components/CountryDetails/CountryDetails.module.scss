@@ -8,7 +8,6 @@
     height: auto;
   }
 }
-//styles for the back button
 .backButton {
   @include boxShadowGenerator($normalShadow);
   border-radius: $lightBorderRadius;
@@ -37,7 +36,6 @@
 }
 
 .main {
-  /* make the main element take the rest of the viewport's height */
   flex-grow: 100;
 
   display: flex;
@@ -55,7 +53,6 @@
     padding: 0 7rem 7rem 7rem;
   }
 }
-//flag's styling
 .flag {
   flex-basis: 50%;
   display: flex;
@@ -66,6 +63,7 @@
     width: 100%;
     max-width: 500px;
     height: 100%;
+    aspect-ratio: 4 / 3;
   }
   @media screen and(min-width:1200px) {
     align-items: center;
@@ -73,7 +71,6 @@
     margin-right: 3rem;
   }
 }
-//details' styling
 .details {
   padding: 1.5rem 0;
   h1 {
@@ -105,7 +102,6 @@
   margin-top: 1.5rem;
 }
 
-//languages
 .languages {
   span {
     display: inline-block;
@@ -134,7 +130,6 @@
   color: lighten($veryDarkBlue--lightMode, 10%);
 }
 
-//error message
 .error {
   margin: auto;
 }

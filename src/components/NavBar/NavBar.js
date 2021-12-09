@@ -9,6 +9,7 @@ import { baseUrl } from "../../_api/config";
 
 const NavBar = () => {
   const { isUsingDarkMode, toggleDarkMode } = useContext(AppContext);
+
   return (
     <>
       <nav
@@ -25,14 +26,13 @@ const NavBar = () => {
           }`}
           onClick={toggleDarkMode}
         >
-          {/* change the icons based on isUsingDarkMode's state */}
           {isUsingDarkMode ? (
             <>
-              <i className="fas fa-moon" /> Light Mode
+              <i className="fas fa-moon" /> Dark Mode
             </>
           ) : (
             <>
-              <i className="far fa-moon" /> Dark Mode
+              <i className="far fa-moon" /> Light Mode
             </>
           )}
         </button>

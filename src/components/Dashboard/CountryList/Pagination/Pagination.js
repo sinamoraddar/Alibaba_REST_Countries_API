@@ -1,17 +1,17 @@
 import React, { useContext } from "react";
+// styles
 import styles from "./Pagination.module.scss";
+// context
 import { AppContext } from "../../../../contexts/AppContext";
 
-//scrolling functionality
 const scroll = (scrollTo) => {
   scrollTo.current.scrollIntoView({ behavior: "smooth" });
 };
 
-//declare constants for determining the current situation for setCurrentPage function
+// constants
 const INCREMENT = "INCREMENT";
 const DECREMENT = "DECREMENT";
 
-//setCurrentPage based on the state of the left and right buttons of the pagination
 const onSetCurrentPage = (
   setCurrentPage,
   currentPage,
@@ -33,18 +33,18 @@ const onSetCurrentPage = (
       break;
   }
 };
-//create pagination for the first and last page
-const firstAndLastPagesPagination = (
+
+// supplementary components
+const paginationOfFirstAndLastPage = (
   currentPage,
   totalPages,
   setCurrentPage,
   scrollTo
 ) => {
   return (
-    <React.Fragment>
+    <>
       <button
         onClick={
-          //only run the click event when we're on the last page
           currentPage + 1 === totalPages
             ? () => {
                 setCurrentPage(0);
@@ -52,18 +52,15 @@ const firstAndLastPagesPagination = (
               }
             : undefined
         }
-        /* conditionally set the active class for the button */ className={
-          currentPage === 0 ? styles.isActive : undefined
-        }
+        className={currentPage === 0 ? styles.isActive : undefined}
       >
         1
       </button>
-      <button className={styles.elipsis}>
+      <button className={styles.ellipsis}>
         <i className="fas fa-ellipsis-h" />
       </button>
       <button
         onClick={
-          //only run the click event when we're on the first page
           currentPage + 1 === 1
             ? () => {
                 setCurrentPage(totalPages - 1);
@@ -71,15 +68,14 @@ const firstAndLastPagesPagination = (
               }
             : undefined
         }
-        /* conditionally set the active class for the button */
         className={currentPage + 1 === totalPages ? styles.isActive : undefined}
       >
         {totalPages}
       </button>
-    </React.Fragment>
+    </>
   );
 };
-//create pagination for 2nd and n-1st page
+
 const paginationForSecondAndOneBeforeLastPage = (
   currentPage,
   totalPages,
@@ -87,7 +83,7 @@ const paginationForSecondAndOneBeforeLastPage = (
   scrollTo
 ) => {
   return (
-    <React.Fragment>
+    <>
       <button
         onClick={() => {
           setCurrentPage(0);
@@ -97,17 +93,15 @@ const paginationForSecondAndOneBeforeLastPage = (
         1
       </button>
       {currentPage + 1 === 2 ? (
-        //2nd page's buttons
-        <React.Fragment>
+        <>
           <button className={styles.isActive}>2</button>
-          <button className={styles.elipsis}>
+          <button className={styles.ellipsis}>
             <i className="fas fa-ellipsis-h" />
           </button>
-        </React.Fragment>
+        </>
       ) : (
-        //n-1st page's buttons
         <React.Fragment>
-          <button className={styles.elipsis}>
+          <button className={styles.ellipsis}>
             <i className="fas fa-ellipsis-h" />
           </button>
           <button className={styles.isActive}>{totalPages - 1}</button>
@@ -121,32 +115,29 @@ const paginationForSecondAndOneBeforeLastPage = (
       >
         {totalPages}
       </button>
-    </React.Fragment>
+    </>
   );
 };
-//create pagination buttons based on the page's state
+
 const paginationMiddleSectionCreator = (
   currentPage,
   totalPages,
   setCurrentPage,
   scrollTo
 ) => {
-  //if there is only one page available
   if (totalPages === 1) {
     return <button className={styles.isActive}>1</button>;
   }
   switch (currentPage + 1) {
-    //create pagination buttons for 1st and last page
     case 1:
     case totalPages: {
-      return firstAndLastPagesPagination(
+      return paginationOfFirstAndLastPage(
         currentPage,
         totalPages,
         setCurrentPage,
         scrollTo
       );
     }
-    // create pagination buttons for 2nd and n-1st page
     case 2:
     case totalPages - 1: {
       return paginationForSecondAndOneBeforeLastPage(
@@ -156,7 +147,6 @@ const paginationMiddleSectionCreator = (
         scrollTo
       );
     }
-    //create pagination buttons for the middle ones
     default: {
       return (
         <React.Fragment>
@@ -168,11 +158,11 @@ const paginationMiddleSectionCreator = (
           >
             1
           </button>
-          <button className={styles.elipsis}>
+          <button className={styles.ellipsis}>
             <i className="fas fa-ellipsis-h" />
           </button>
           <button className={styles.isActive}>{currentPage + 1}</button>
-          <button className={styles.elipsis}>
+          <button className={styles.ellipsis}>
             <i className="fas fa-ellipsis-h" />
           </button>
           <button
@@ -189,15 +179,15 @@ const paginationMiddleSectionCreator = (
   }
 };
 
-//component declaration
+// main component
 const Pagination = ({ currentPage, setCurrentPage, totalPages, scrollTo }) => {
   // context
   const { isUsingDarkMode } = useContext(AppContext);
+
   return (
     <div
       className={`${styles.pagination} ${isUsingDarkMode ? `dark ` : `light `}`}
     >
-      {/* disable next and previous page buttons whenever there is only 1 page available */}
       <button
         onClick={() => {
           onSetCurrentPage(setCurrentPage, currentPage, DECREMENT, scrollTo);
@@ -206,7 +196,6 @@ const Pagination = ({ currentPage, setCurrentPage, totalPages, scrollTo }) => {
       >
         <i className="fas fa-arrow-left" />
       </button>
-      {/* create the middle buttons for pagination component, based on the currentPage */}
       {paginationMiddleSectionCreator(
         currentPage,
         totalPages,
