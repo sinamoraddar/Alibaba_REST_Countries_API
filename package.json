@@ -1,8 +1,8 @@
 {
-  "name": "rest-countries-api-app",
+  "name": "Alibaba_REST_Countries_API",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://sinamoraddar.github.io/REST-Countries-API-with-color-theme-switcher/",
+  "homepage": "https://sinamoraddar.github.io/Alibaba_REST_Countries_API/",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
     "@fortawesome/free-brands-svg-icons": "^5.15.4",
