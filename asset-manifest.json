@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/Alibaba_REST_Countries_API/static/css/main.a2b8dae4.chunk.css",
+    "main.css": "/Alibaba_REST_Countries_API/static/css/main.22e2444c.chunk.css",
     "main.js": "/Alibaba_REST_Countries_API/static/js/main.ae980dd0.chunk.js",
     "main.js.map": "/Alibaba_REST_Countries_API/static/js/main.ae980dd0.chunk.js.map",
     "runtime~main.js": "/Alibaba_REST_Countries_API/static/js/runtime~main.b1e28553.js",
@@ -8,8 +8,8 @@
     "static/js/2.3fc28d8e.chunk.js": "/Alibaba_REST_Countries_API/static/js/2.3fc28d8e.chunk.js",
     "static/js/2.3fc28d8e.chunk.js.map": "/Alibaba_REST_Countries_API/static/js/2.3fc28d8e.chunk.js.map",
     "index.html": "/Alibaba_REST_Countries_API/index.html",
-    "precache-manifest.cc20cc5106589b9f73d4cd9066f89285.js": "/Alibaba_REST_Countries_API/precache-manifest.cc20cc5106589b9f73d4cd9066f89285.js",
+    "precache-manifest.b546e0014ec4f812a336658c3c0a600a.js": "/Alibaba_REST_Countries_API/precache-manifest.b546e0014ec4f812a336658c3c0a600a.js",
     "service-worker.js": "/Alibaba_REST_Countries_API/service-worker.js",
-    "static/css/main.a2b8dae4.chunk.css.map": "/Alibaba_REST_Countries_API/static/css/main.a2b8dae4.chunk.css.map"
+    "static/css/main.22e2444c.chunk.css.map": "/Alibaba_REST_Countries_API/static/css/main.22e2444c.chunk.css.map"
   }
 }
