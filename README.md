@@ -1,4 +1,4 @@
-# REST-Countries-API-with-color-theme-switcher
+# Alibaba_REST_Countries_API
 
 a React web app using the countries RESTFUL api
 
@@ -6,18 +6,17 @@ a React web app using the countries RESTFUL api
 
 - HTML
 - CSS
-  - sass
-  - **css in js ->css modules**
-  - grid & flexbox
-  - **no css framework was used**
-  - made with **mobile first design concepts**
+  - SCSS
+  - **CSS in JS -> CSS modules**
+  - Grid & Flex-box
+  - **No CSS framework was used**
+  - made with **Mobile first design concepts**
 - JavaScript
-  - Reactjs(Hooks,...)
+  - Reactjs(Hooks, etc)
   - axios
   - turned it into a **PWA** with the help of _Create React App_
 
 # My Solution
 
-[Link](https://sinamoraddar.github.io/REST-Countries-API-with-color-theme-switcher/)
+[Link](https://sinamoraddar.github.io/Alibaba_REST_Countries_API/)
 
-### This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
