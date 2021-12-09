@@ -10,7 +10,7 @@ const CountryItem = ({
   name,
   population,
   region,
-  homePage
+  homePage,
 }) => {
   return (
     <Link to={`${homePage}countries/${name}`}>
@@ -22,7 +22,7 @@ const CountryItem = ({
         <div
           className={styles.background}
           style={{
-            background: `url(https://cdn.rawgit.com/hjnilsson/country-flags/master/svg/${alpha2Code.toLowerCase()}.svg)`
+            background: `url(https://cdn.rawgit.com/hjnilsson/country-flags/master/svg/${alpha2Code.toLowerCase()}.svg)`,
           }}
         />
         <figcaption className={styles.textContainer}>
@@ -32,7 +32,6 @@ const CountryItem = ({
             <span
               className={darkMode ? styles.darkCaption : styles.lightCaption}
             >
-              {/* format the population number via numeral.js package */}
               {Numeral(population).format(0, 0)}
             </span>
           </div>

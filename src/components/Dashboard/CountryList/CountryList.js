@@ -4,18 +4,34 @@ import Loading from "../../Loading/Loading";
 import Pagination from "./Pagination/Pagination";
 import styles from "./CountryList.module.scss";
 
-//create courntry  items
-const countryItemCreator = (filteredCountries, currentPage, darkMode,homePage) => {
+//create country  items
+const countryItemCreator = (
+  filteredCountries,
+  currentPage,
+  darkMode,
+  homePage
+) => {
   //create the items by mapping over the filtered countries
   return filteredCountries
     .slice(currentPage * 8, currentPage * 8 + 8)
-    .map(country => (
-      <CountryItem key={country.name} {...country} darkMode={darkMode} homePage={homePage} />
+    .map((country) => (
+      <CountryItem
+        key={country.name}
+        {...country}
+        darkMode={darkMode}
+        homePage={homePage}
+      />
     ));
 };
 
 //component declaration
-const CountryList = ({ filteredCountries, darkMode, totalCountries,homePage ,scrollTo}) => {
+const CountryList = ({
+  filteredCountries,
+  darkMode,
+  totalCountries,
+  homePage,
+  scrollTo,
+}) => {
   //declare the state properties using react hooks
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
@@ -45,7 +61,12 @@ const CountryList = ({ filteredCountries, darkMode, totalCountries,homePage ,scr
           <React.Fragment>
             <div>
               {/* show only 8 countries per page based on the filtered countries' list*/}
-              {countryItemCreator(filteredCountries, currentPage, darkMode,homePage)}
+              {countryItemCreator(
+                filteredCountries,
+                currentPage,
+                darkMode,
+                homePage
+              )}
             </div>
             <Pagination
               currentPage={currentPage}

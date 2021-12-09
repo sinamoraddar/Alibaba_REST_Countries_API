@@ -8,7 +8,7 @@ const useOutsideAlerter = (regionFilterRef, setDropDownFilterStatus) => {
   /**
    * Alert if clicked on outside of element
    */
-  const handleClickOutside = event => {
+  const handleClickOutside = (event) => {
     if (
       regionFilterRef.current &&
       !regionFilterRef.current.contains(event.target)
@@ -32,7 +32,7 @@ const FilterBar = ({
   regionFilter,
   onCountrySearchFieldChange,
   onRegionChange,
-  scrollTo
+  scrollTo,
 }) => {
   const [dropDownFilterStatus, setDropDownFilterStatus] = useState(false);
   // using react ref for detecting a click outside of region filter's dropdown menu
@@ -49,11 +49,11 @@ const FilterBar = ({
     >
       {/* search bar */}
       <span className={darkMode ? `darkElements` : `lightElements`}>
-        <i className="fas fa-search"/>
+        <i className="fas fa-search" />
         <input
           type="text"
           placeholder="Search for a country..."
-          onChange={e => onCountrySearchFieldChange(e.target.value)}
+          onChange={(e) => onCountrySearchFieldChange(e.target.value)}
           value={countrySearchField}
         />
       </span>
@@ -70,7 +70,7 @@ const FilterBar = ({
                 className={darkMode ? `darkElements` : `lightElements`}
                 onClick={() => onRegionChange("")}
               >
-                <i className="fas fa-times"/>
+                <i className="fas fa-times" />
               </button>
             )}
             {/* region filter's title */}
@@ -88,7 +88,7 @@ const FilterBar = ({
         {dropDownFilterStatus && (
           <ul
             className={darkMode ? `darkElements` : `lightElements`}
-            onClick={async e => {
+            onClick={async (e) => {
               await onRegionChange(e.target.innerHTML);
               setDropDownFilterStatus(!dropDownFilterStatus);
             }}

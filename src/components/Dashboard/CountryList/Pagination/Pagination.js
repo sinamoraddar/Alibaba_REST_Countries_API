@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./Pagination.module.scss";
 
 //scrolling functionality
-const scroll = scrollTo => {
+const scroll = (scrollTo) => {
   scrollTo.current.scrollIntoView({ behavior: "smooth" });
 };
 
@@ -51,13 +51,14 @@ const firstAndLastPagesPagination = (
               }
             : undefined
         }
-        
-        /* conditionally set the active class for the button */ className={currentPage === 0 ? styles.isActive : undefined}
+        /* conditionally set the active class for the button */ className={
+          currentPage === 0 ? styles.isActive : undefined
+        }
       >
         1
       </button>
       <button className={styles.elipsis}>
-        <i className="fas fa-ellipsis-h"/>
+        <i className="fas fa-ellipsis-h" />
       </button>
       <button
         onClick={
@@ -99,14 +100,14 @@ const paginationForSecondAndOneBeforeLastPage = (
         <React.Fragment>
           <button className={styles.isActive}>2</button>
           <button className={styles.elipsis}>
-            <i className="fas fa-ellipsis-h"/>
+            <i className="fas fa-ellipsis-h" />
           </button>
         </React.Fragment>
       ) : (
         //n-1st page's buttons
         <React.Fragment>
           <button className={styles.elipsis}>
-            <i className="fas fa-ellipsis-h"/>
+            <i className="fas fa-ellipsis-h" />
           </button>
           <button className={styles.isActive}>{totalPages - 1}</button>
         </React.Fragment>
@@ -167,11 +168,11 @@ const paginationMiddleSectionCreator = (
             1
           </button>
           <button className={styles.elipsis}>
-            <i className="fas fa-ellipsis-h"/>
+            <i className="fas fa-ellipsis-h" />
           </button>
           <button className={styles.isActive}>{currentPage + 1}</button>
           <button className={styles.elipsis}>
-            <i className="fas fa-ellipsis-h"/>
+            <i className="fas fa-ellipsis-h" />
           </button>
           <button
             onClick={() => {
@@ -193,7 +194,7 @@ const Pagination = ({
   currentPage,
   setCurrentPage,
   totalPages,
-  scrollTo
+  scrollTo,
 }) => {
   return (
     <div className={`${styles.pagination} ${darkMode ? `dark ` : `light `}`}>
@@ -204,7 +205,7 @@ const Pagination = ({
         }}
         disabled={currentPage === 0}
       >
-        <i className="fas fa-arrow-left"/>
+        <i className="fas fa-arrow-left" />
       </button>
       {/* create the middle buttons for pagination component, based on the currentPage */}
       {paginationMiddleSectionCreator(
@@ -220,7 +221,7 @@ const Pagination = ({
         }}
         disabled={currentPage + 1 === totalPages}
       >
-        <i className="fas fa-arrow-left"/>
+        <i className="fas fa-arrow-left" />
       </button>
     </div>
   );

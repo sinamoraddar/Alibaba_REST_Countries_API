@@ -11,12 +11,12 @@ class Dashboard extends Component {
     this.state = {
       filteredCountries: null,
       countrySearchField: "",
-      regionFilter: ""
+      regionFilter: "",
     };
   }
 
   //update the state whenever the searchfield changes
-  onCountrySearchFieldChange = country => {
+  onCountrySearchFieldChange = (country) => {
     this.setState(
       () => ({ countrySearchField: country }),
       this.updateFilteredCountries
@@ -24,7 +24,7 @@ class Dashboard extends Component {
   };
 
   //update region filter based on the dropdown menu's current item
-  onRegionChange = region => {
+  onRegionChange = (region) => {
     this.setState(
       () => ({ regionFilter: region }),
       this.updateFilteredCountries
@@ -37,14 +37,14 @@ class Dashboard extends Component {
       const { totalCountries } = prevProps;
       const { countrySearchField, regionFilter } = prevState;
       //filter based on searchfield
-      let filteredCountries = totalCountries.filter(country => {
+      let filteredCountries = totalCountries.filter((country) => {
         return country.name
           .toLowerCase()
           .includes(countrySearchField.toLowerCase());
       });
       //filter based on region
       if (regionFilter) {
-        filteredCountries = filteredCountries.filter(country => {
+        filteredCountries = filteredCountries.filter((country) => {
           return country.region.toLowerCase() === regionFilter.toLowerCase();
         });
       }

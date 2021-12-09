@@ -17,7 +17,8 @@ const NavBar = ({ darkMode, appModeChanger, homePage }) => (
           darkMode ? `dark darkElements` : `light lightElements`
         }`}
         onClick={appModeChanger}
-      >{/* change the icons based on darkMode's state */}
+      >
+        {/* change the icons based on darkMode's state */}
         {darkMode ? (
           <>
             <i className="fas fa-moon"></i> Light Mode
