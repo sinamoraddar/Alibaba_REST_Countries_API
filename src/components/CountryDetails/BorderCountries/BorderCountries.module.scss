@@ -15,7 +15,7 @@
     text-decoration: none;
     text-transform: capitalize;
     margin: 0 12px 12px 0;
-    //media query for the devices which support hovering effects
+
     @media screen and (hover: hover) {
       &:hover {
         font-weight: $semiBoldFontWeight;
