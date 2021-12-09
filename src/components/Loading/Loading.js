@@ -1,12 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
+import { AppContext } from "../../contexts/AppContext";
 
-const Loading = ({ darkMode }) => (
-  <img
-    className="loadingGif"
-    src={`${process.env.PUBLIC_URL}/assets/pics/loading--${
-      darkMode ? `dark` : `light`
-    }.svg`}
-    alt="loading"
-  />
-);
+const Loading = () => {
+  const { isUsingDarkMode } = useContext(AppContext);
+  return (
+    <img
+      className="loadingGif"
+      src={`${process.env.PUBLIC_URL}/assets/pics/loading--${
+        isUsingDarkMode ? `dark` : `light`
+      }.svg`}
+      alt="loading"
+    />
+  );
+};
 export default Loading;

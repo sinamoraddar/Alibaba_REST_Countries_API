@@ -8,9 +8,9 @@ import NotFound from "./NotFoundPage/NotFound";
 import { AppContext } from "../contexts/AppContext";
 // api
 import { baseUrl } from "../_api/config";
+import { getCountryList } from "../_api/methods";
 // styles
 import "./App.scss";
-import { getCountryList } from "../_api/methods";
 
 const App = () => {
   // refs
@@ -26,25 +26,29 @@ const App = () => {
     setIsUsingDarkMode((isUsingDarkMode) => !isUsingDarkMode);
   }, []);
 
+  const setLoadingValue = useCallback((loading) => {
+    if (typeof loading === "boolean") {
+      setLoading(loading);
+    } else throw new Error("loading value should be a boolean");
+  }, []);
+
   // life cycle hooks
   useEffect(() => {
+    setLoadingValue(true);
     getCountryList()
       .then((result) => {
         if (_isMounted.current) {
           setTotalCountries(result.data);
         }
       })
-      .catch(console.error);
+      .catch(console.error)
+      .finally(() => {
+        setLoadingValue(false);
+      });
 
     return () => {
       _isMounted.current = false;
     };
-  }, []);
-
-  const setLoadingValue = useCallback((loading) => {
-    if (typeof loading === "boolean") {
-      setLoading(loading);
-    } else throw new Error("loading value should be a boolean");
   }, []);
 
   return (
@@ -53,9 +57,7 @@ const App = () => {
         loading,
         setLoadingValue,
         toggleDarkMode,
-
         isUsingDarkMode,
-
         totalCountries,
       }}
     >
@@ -68,7 +70,6 @@ const App = () => {
             <CountryDetails />
           </Route>
           <Route>
-            {" "}
             <NotFound />
           </Route>
         </Switch>

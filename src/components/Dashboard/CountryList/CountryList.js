@@ -1,18 +1,23 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+// components
 import CountryItem from "./CountryItem/CountryItem";
 import Loading from "../../Loading/Loading";
 import Pagination from "./Pagination/Pagination";
+// styles
 import styles from "./CountryList.module.scss";
+// context
+import { AppContext } from "../../../contexts/AppContext";
+// api
+import { baseUrl } from "../../../_api/config";
 
-//create country  items
 const countryItemCreator = (
   filteredCountries,
   currentPage,
   darkMode,
   homePage
-) => {
-  //create the items by mapping over the filtered countries
-  return filteredCountries
+) =>
+  filteredCountries.length > 0 &&
+  filteredCountries
     .slice(currentPage * 8, currentPage * 8 + 8)
     .map((country) => (
       <CountryItem
@@ -22,70 +27,62 @@ const countryItemCreator = (
         homePage={homePage}
       />
     ));
-};
 
-//component declaration
 const CountryList = ({
   filteredCountries,
-  darkMode,
-  totalCountries,
-  homePage,
   scrollTo,
+  regionFilter,
+  countrySearchField,
 }) => {
-  //declare the state properties using react hooks
+  // context
+  const { loading, isUsingDarkMode, totalCountries } = useContext(AppContext);
+
+  // state
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
 
-  //update totalpages whenever the filterd countries' list changes
+  // life cycle hooks
   useEffect(() => {
-    //calculate the number of totalpages if there are more than 8 countries available
-    //otherwise set it to 1
-    const tempTotalPages =
-      filteredCountries.length > 8
+    setTotalPages(
+      filteredCountries?.length > 8
         ? Math.ceil(filteredCountries.length / 8)
-        : 1;
-    setTotalPages(tempTotalPages);
+        : 1
+    );
   }, [filteredCountries]);
-  //update the currentPage whenever the filteredcountries' list changes
+
   useEffect(() => {
     setCurrentPage(0);
   }, [filteredCountries]);
   return (
     <section className={styles.countryList}>
-      {/* check if the countries have yet been fetched or not
-        if not->show loading gif
-        if they did->show the countries list
-      */}
-      {totalCountries.length > 0 ? (
-        filteredCountries.length !== 0 ? (
-          <React.Fragment>
-            <div>
-              {/* show only 8 countries per page based on the filtered countries' list*/}
-              {countryItemCreator(
-                filteredCountries,
-                currentPage,
-                darkMode,
-                homePage
-              )}
-            </div>
-            <Pagination
-              currentPage={currentPage}
-              darkMode={darkMode}
-              /* we use scollTo ref for the auto scoll behavior */
-              scrollTo={scrollTo}
-              setCurrentPage={setCurrentPage}
-              totalPages={totalPages}
-            />
-          </React.Fragment>
-        ) : (
-          <p className={styles.error}>
-            Oops, we have no idea what you're talking about
-            <br />
-            Search for something else
-          </p>
-        )
+      {loading ? (
+        <Loading />
+      ) : (regionFilter || countrySearchField) &&
+        filteredCountries?.length === 0 ? (
+        <p className={styles.error}>
+          Oops, we have no idea what you're talking about
+          <br />
+          Search for something else
+        </p>
       ) : (
-        <Loading darkMode={darkMode} />
+        <React.Fragment>
+          <div>
+            {countryItemCreator(
+              !regionFilter && !countrySearchField
+                ? totalCountries
+                : filteredCountries,
+              currentPage,
+              isUsingDarkMode,
+              baseUrl
+            )}
+          </div>
+          <Pagination
+            currentPage={currentPage}
+            scrollTo={scrollTo}
+            setCurrentPage={setCurrentPage}
+            totalPages={totalPages}
+          />
+        </React.Fragment>
       )}
     </section>
   );

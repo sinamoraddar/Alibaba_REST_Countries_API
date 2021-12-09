@@ -1,16 +1,17 @@
 import React from "react";
 import Numeral from "numeral";
 import { Link } from "react-router-dom";
+// styles
 import styles from "./CountryItem.module.scss";
 
 const CountryItem = ({
   capital,
-  alpha2Code,
   darkMode,
   name,
   population,
   region,
   homePage,
+  flag,
 }) => {
   return (
     <Link to={`${homePage}countries/${name}`}>
@@ -22,7 +23,7 @@ const CountryItem = ({
         <div
           className={styles.background}
           style={{
-            background: `url(https://cdn.rawgit.com/hjnilsson/country-flags/master/svg/${alpha2Code.toLowerCase()}.svg)`,
+            background: `url(${flag})`,
           }}
         />
         <figcaption className={styles.textContainer}>

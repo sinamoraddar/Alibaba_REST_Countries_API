@@ -1,5 +1,12 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, {
+  useState,
+  useRef,
+  useEffect,
+  useContext,
+  useCallback,
+} from "react";
 import styles from "./FilterBar.module.scss";
+import { AppContext } from "../../../contexts/AppContext";
 
 /*
   our custom Hook that alerts clicks outside of the passed ref
@@ -28,52 +35,79 @@ const useOutsideAlerter = (regionFilterRef, setDropDownFilterStatus) => {
 
 const FilterBar = ({
   countrySearchField,
-  darkMode,
   regionFilter,
   onCountrySearchFieldChange,
   onRegionChange,
   scrollTo,
 }) => {
+  // context
+  const { isUsingDarkMode } = useContext(AppContext);
+
+  // state
   const [dropDownFilterStatus, setDropDownFilterStatus] = useState(false);
-  // using react ref for detecting a click outside of region filter's dropdown menu
+
+  // ref
   const regionFilterRef = useRef(null);
-  //call our custom hook
+
+  // custom hooks
   useOutsideAlerter(regionFilterRef, setDropDownFilterStatus);
+
+  // callbacks
+  const onSearchFieldChange = useCallback(
+    (e) => onCountrySearchFieldChange(e.target.value),
+    []
+  );
+
+  const toggleDropDown = useCallback(
+    () =>
+      setDropDownFilterStatus((dropDownFilterStatus) => !dropDownFilterStatus),
+    []
+  );
+
+  const resetRegion = useCallback((e) => {
+    e.stopPropagation();
+    onRegionChange("");
+  }, []);
+
+  const openDropDown = useCallback(
+    (e) => {
+      onRegionChange(e.target.innerHTML);
+      toggleDropDown();
+    },
+
+    []
+  );
 
   return (
     <div
       ref={scrollTo}
       className={`${styles.filterBar} ${styles.container} ${
-        darkMode ? `dark` : `light`
+        isUsingDarkMode ? `dark` : `light`
       }`}
     >
-      {/* search bar */}
-      <span className={darkMode ? `darkElements` : `lightElements`}>
+      <span className={isUsingDarkMode ? `darkElements` : `lightElements`}>
         <i className="fas fa-search" />
         <input
           type="text"
           placeholder="Search for a country..."
-          onChange={(e) => onCountrySearchFieldChange(e.target.value)}
+          onChange={onSearchFieldChange}
           value={countrySearchField}
         />
       </span>
-      {/* region filter changer */}
       <div className={styles.regionFilter} ref={regionFilterRef}>
         <div
-          className={darkMode ? `darkElements` : `lightElements`}
-          onClick={() => setDropDownFilterStatus(!dropDownFilterStatus)}
+          className={isUsingDarkMode ? `darkElements` : `lightElements`}
+          onClick={toggleDropDown}
         >
           <span>
-            {/* show the remove button */}
             {regionFilter && (
               <button
-                className={darkMode ? `darkElements` : `lightElements`}
-                onClick={() => onRegionChange("")}
+                className={isUsingDarkMode ? `darkElements` : `lightElements`}
+                onClick={resetRegion}
               >
                 <i className="fas fa-times" />
               </button>
             )}
-            {/* region filter's title */}
             {regionFilter
               ? regionFilter.charAt(0).toUpperCase() + regionFilter.slice(1)
               : "Filter by Region"}
@@ -84,14 +118,10 @@ const FilterBar = ({
             }`}
           />
         </div>
-        {/* region filter's items' dropdown menu */}
         {dropDownFilterStatus && (
           <ul
-            className={darkMode ? `darkElements` : `lightElements`}
-            onClick={async (e) => {
-              await onRegionChange(e.target.innerHTML);
-              setDropDownFilterStatus(!dropDownFilterStatus);
-            }}
+            className={isUsingDarkMode ? `darkElements` : `lightElements`}
+            onClick={openDropDown}
           >
             <li>africa</li>
             <li>americas</li>

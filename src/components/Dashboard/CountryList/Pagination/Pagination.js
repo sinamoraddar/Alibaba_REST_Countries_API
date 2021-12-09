@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
 import styles from "./Pagination.module.scss";
+import { AppContext } from "../../../../contexts/AppContext";
 
 //scrolling functionality
 const scroll = (scrollTo) => {
@@ -189,15 +190,13 @@ const paginationMiddleSectionCreator = (
 };
 
 //component declaration
-const Pagination = ({
-  darkMode,
-  currentPage,
-  setCurrentPage,
-  totalPages,
-  scrollTo,
-}) => {
+const Pagination = ({ currentPage, setCurrentPage, totalPages, scrollTo }) => {
+  // context
+  const { isUsingDarkMode } = useContext(AppContext);
   return (
-    <div className={`${styles.pagination} ${darkMode ? `dark ` : `light `}`}>
+    <div
+      className={`${styles.pagination} ${isUsingDarkMode ? `dark ` : `light `}`}
+    >
       {/* disable next and previous page buttons whenever there is only 1 page available */}
       <button
         onClick={() => {

@@ -76,7 +76,9 @@ const Dashboard = () => {
           styles.fillTheRemainingHeight
         } ${isUsingDarkMode ? `dark` : `light`}`}
       >
-        <CountryList {...{ scrollTo, filteredCountries }} />
+        <CountryList
+          {...{ scrollTo, filteredCountries, regionFilter, countrySearchField }}
+        />
       </main>
     </>
   );
