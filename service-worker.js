@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/Alibaba_REST_Countries_API/precache-manifest.373a8d394cdf31ca37d98f34225a731b.js"
+  "/Alibaba_REST_Countries_API/precache-manifest.16d559b07d03ff844b1402360beb02fd.js"
 );
 
 self.addEventListener('message', (event) => {
