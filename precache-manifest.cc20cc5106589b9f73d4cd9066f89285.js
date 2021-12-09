@@ -1,18 +1,18 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "f21f90865610e8809e604c96fc49cbc6",
+    "revision": "8aa6a163ba5772c5f6cea6cd8414f88f",
     "url": "/Alibaba_REST_Countries_API/index.html"
   },
   {
-    "revision": "7613fff35be1cc3d9e6b",
-    "url": "/Alibaba_REST_Countries_API/static/css/main.2ac32bf1.chunk.css"
+    "revision": "8797f912c48e25b87197",
+    "url": "/Alibaba_REST_Countries_API/static/css/main.a2b8dae4.chunk.css"
   },
   {
     "revision": "5d6c9102abe6467cd268",
     "url": "/Alibaba_REST_Countries_API/static/js/2.3fc28d8e.chunk.js"
   },
   {
-    "revision": "7613fff35be1cc3d9e6b",
+    "revision": "8797f912c48e25b87197",
     "url": "/Alibaba_REST_Countries_API/static/js/main.ae980dd0.chunk.js"
   },
   {
