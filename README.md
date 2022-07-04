@@ -1,5 +1,4 @@
-# REST-Countries-API-with-color-theme-switcher-challenge
-
+# Alibaba_REST_Countries_API
 a React web app using the countries RESTFUL api
 
 ## Tech Stack
